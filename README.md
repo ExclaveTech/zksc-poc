@@ -71,9 +71,12 @@ function getState(uint _key) external view returns (bytes memory);
 ### 3. Recursive zk-SNARKs Generation Module
 In most applications, there is often a trade-off between time and space. Due to the increasing demand for throughput and performance in scenarios like FOCG, conventional batch generation of zero-knowledge proofs is insufficient to maximize off-chain scalability. Based on this, ZK State Channels introduce a new zk-proofs generation approach: recursive zero-knowledge proofs.
 
-<img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_1.png" alt="High-level Structure of zk-state-channel" width="auto" height="500">
+<img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_1.png" alt="High-level Structure" width="200" height="450">
 
 #### Recursion + zk-SNARKs
 Recursive Zero-Knowledge Proofs are a variant of zero-knowledge proofs that allow one proof to verify the correctness of another proof. In recursive zero-knowledge proofs, a proof can include a reference to another proof, enabling multiple proofs to be nested together, forming a proof chain for verification within the proof hierarchy.
 Users of ZK State Channels perform off-chain operations through contract execution in a virtual environment. These operations batch together transaction data and generate zero-knowledge proofs. Leveraging the concise proofs of zkSNARKs, the generated zk-proofs are recursively generated to minimize on-chain data and verification costs.
 Thanks to upgrades and improvements in the Plonky2 algorithm, recursive proofs based on the polynomial commitment scheme FRI can eliminate the trade-off between "proof size" and "proof time." In scenarios where proof time is a priority, optimizations can be applied to achieve maximum proof speed. Importantly, when these proofs are recursively aggregated, a single proof that can be verified in a smaller circuit is obtained. This means that proof size can be reduced to approximately 45kb, with a proof time of just 20 seconds.
+
+### Thanks to...
+[Mohamed Fouda's inspiration](https://twitter.com/mohamedffouda/status/1712193022085992456?s=61&t=z6gv2VZ59wUiwkf41xNwcQ). 
