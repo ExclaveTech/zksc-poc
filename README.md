@@ -71,7 +71,7 @@ function getState(uint _key) external view returns (bytes memory);
 ### 3. Recursive zk-SNARKs Generation Module
 In most applications, there is often a trade-off between time and space. Due to the increasing demand for throughput and performance in scenarios like FOCG, conventional batch generation of zero-knowledge proofs is insufficient to maximize off-chain scalability. Based on this, ZK State Channels introduce a new zk-proofs generation approach: recursive zero-knowledge proofs.
 
-<img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_1.png" alt="High-level Structure" width="350" height="auto">
+<img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_1.png" alt="High-level Structure" width="450" height="auto">
 
 #### Recursion + zk-SNARKs
 Recursive Zero-Knowledge Proofs are a variant of zero-knowledge proofs that allow one proof to verify the correctness of another proof. In recursive zero-knowledge proofs, a proof can include a reference to another proof, enabling multiple proofs to be nested together, forming a proof chain for verification within the proof hierarchy.
