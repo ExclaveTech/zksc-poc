@@ -1,18 +1,10 @@
 # ZK State Channels
 ## Why do we need ZK State Channels？
-The cost of usage and transaction throughput on the Ethereum mainnet has always been a constraint on the development of on-chain applications. The emergence of Fully On-chain Gaming (FOCG) further highlights the urgency of current scalability. Traditional solutions like Validium or State Channels are only capable of building applications based on simple off-chain transaction logic and cannot support complex game logic. Therefore, designing a scalable solution that balances cost and compatibility becomes especially important.
-ZK State Channel is a novel scaling solution based on state channels, Validium data availability, and recursive zero-knowledge proofs. Its primary goal is to significantly reduce the on-chain transaction burden and user operational costs by utilizing state channels in conjunction with the Validium approach. Additionally, it leverages recursive zero-knowledge proofs and other techniques to construct sophisticated off-chain operating environments, making it an ideal infrastructure for high-transaction-volume and complex-operation-logic applications like Fully On-chain Gaming (FOCG), offering security, efficiency, and cost-effectiveness.
+The ZK State Channel is a novel scaling solution based on state channels, Validium data availability, and recursive zero-knowledge proofs. Its primary aim is to significantly reduce on-chain transaction burden and user operation costs through state channels and the Validium solution. It still allows for the creation of complex off-chain execution environments, leveraging methods such as recursive zero-knowledge proofs. This infrastructure provides a secure, effective, and cost-effective solution for high-transaction and complex-logic applications like blockchain games.
+Focg, as a next-generation DApp, stores all game logic and data entirely on the blockchain, requiring high system performance. This makes Validium an ideal execution environment for Focg. However, for interoperability reasons, Focg must retain user data and game contracts on the blockchain. Running Focg directly in Validium may reduce its interoperability and potentially impact the player's user experience, dividing traffic and liquidity. To address this issue, a zk state channel is constructed between Focg and Validium using recursive zkSNARKs. This allows complex and independent game logic within Focg to run on Validium, verifying the correctness of player's game processes and results through recursive zkSNARKs, and transmitting zk proofs and game results back to the blockchain after the game's conclusion.
 ## How does it work？
-ZK State Channel combines technologies such as Recursive zk-SNARKs and state channels to achieve an efficient, private, and scalable way of interacting with blockchain. The following are the core functional modules of ZK State Channel:
-### 1. Off-Chain Execution Module
-The off-chain executable modules include two main functionalities:
-- zkEVM, an EVM-equivalent smart contract execution environment.
-- A third-party data availability module designed based on Validium.
-#### Low On-chain Costs
-Validium was originally a Layer 2 scaling solution that, similar to zk-rollups, ensures the integrity and legality of off-chain transactions while not storing all transaction data on the Ethereum mainnet. Despite some compromise in data availability, it has brought significant scalability improvements to Ethereum. With the rapid development of data availability layer infrastructure (such as EigenDA, Celestia, Avail, etc.), the original Validium approach of using DAC to ensure data availability can be achieved with more secure and neutral third-party DA layers.
-#### Friendly Contract Execution Environment
-To facilitate developers in implementing their complex off-chain execution logic in ZK State Channel, an EVM-equivalent smart contract execution environment is essential. This environment will be integrated into every minimal unit, zk-Node, in the off-chain network. Developers can easily compile and deploy Solidity code in zkEVM, allowing dApps to include, but not limited to, FOCG based on game engines like MUD and on-chain trading exchanges.
-### 2. On-Chain Contract Module
+ZK State Channels combine technologies such as recursive zero-knowledge proofs (recursive zk-SNARKs), state channels, and Validium to achieve an efficient, private, and scalable blockchain interaction method. The following are the core functional modules of the ZK State Channel:
+### 1. On-Chain Contract Module
 State Channels are a scalability technology with the core concept of executing transactions offline, only submitting the state (account balances, contract states, etc.) to the blockchain when necessary. In ZK State Channels, the on-chain contract module serves as the entry point for users to interact on-chain and manage on-chain states. It is used to lock the state when opening a state channel and settle it after the channel is closed.
 #### Efficient & Streamlined dApp Framework
 In an ideal design, we aim to build a low-integration-cost state channel construction framework that imposes no restrictions on the state progression within the channel and the termination logic of the channel, making it easy to support various types of applications. Leveraging recursive zero-knowledge proofs generated by the off-chain virtual execution environment, a highly adaptable dApp workflow is defined:
@@ -68,8 +60,8 @@ function finalizeOnTimeout() internal;
  */
 function getState(uint _key) external view returns (bytes memory);
 ```
-### 3. Recursive zk-SNARKs Generation Module
-In most applications, there is often a trade-off between time and space. Due to the increasing demand for throughput and performance in scenarios like FOCG, conventional batch generation of zero-knowledge proofs is insufficient to maximize off-chain scalability. Based on this, ZK State Channels introduce a new zk-proofs generation approach: recursive zero-knowledge proofs.
+### 2. Recursive zk-SNARKs Generation Module
+As an off-chain scaling solution, the ZK State Channels allow us to move complex logic and computations from fully on-chain games to off-chain. It leverages zk-proofs to verify the correctness and integrity of user operations conducted off-chain, ultimately requiring only the submission of the user's game results and state to the blockchain. Since State Channels only submit data to the chain once when the channel is closed, to ensure the integrity and validity of user data, ZK State Channels introduce a new zk-proof generation scheme: recursive zero-knowledge proofs.
 
 <img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_1.png" alt="High-level Structure" width="550" height="auto">
 
@@ -77,6 +69,13 @@ In most applications, there is often a trade-off between time and space. Due to 
 Recursive Zero-Knowledge Proofs are a variant of zero-knowledge proofs that allow one proof to verify the correctness of another proof. In recursive zero-knowledge proofs, a proof can include a reference to another proof, enabling multiple proofs to be nested together, forming a proof chain for verification within the proof hierarchy.
 Users of ZK State Channels perform off-chain operations through contract execution in a virtual environment. These operations batch together transaction data and generate zero-knowledge proofs. Leveraging the concise proofs of zkSNARKs, the generated zk-proofs are recursively generated to minimize on-chain data and verification costs.
 Thanks to upgrades and improvements in the Plonky2 algorithm, recursive proofs based on the polynomial commitment scheme FRI can eliminate the trade-off between "proof size" and "proof time." In scenarios where proof time is a priority, optimizations can be applied to achieve maximum proof speed. Importantly, when these proofs are recursively aggregated, a single proof that can be verified in a smaller circuit is obtained. This means that proof size can be reduced to approximately 45kb, with a proof time of just 20 seconds.
-
+### 3. Off-Chain Execution Module
+The off-chain executable modules include two main functionalities:
+- zkEVM, an EVM-equivalent smart contract execution environment.
+- A third-party data availability module designed based on Validium.
+#### zkEVM Execution Environment
+To facilitate developers in executing their complex contract logic and generating zk-proofs within the ZK State Channel, it is essential to have a zkEVM runtime environment that is functionally equivalent to the Ethereum Virtual Machine (EVM). This runtime environment will be integrated into each minimal unit called zk-Node within the off-chain network. Developers can easily compile and deploy Solidity code in zkEVM. These dApps will include, but not be limited to, fully on-chain games developed based on game engines like MUD and on-chain dApps such as socialfi.
+#### Cost-Effective Storage
+The goal of zk State Channel is to reduce storage costs by processing certain transactions through off-chain computation followed by on-chain verification. This approach ensures the integrity and legality of off-chain transactions through recursive zk-SNARKs. By running zk State Channel within Validium, user transaction data can be directly stored in Validium's Data Availability (DA) layer, thereby lowering user transaction costs and enhancing transaction performance.
 ### Thanks to...
 [Mohamed Fouda's inspiration](https://twitter.com/mohamedffouda/status/1712193022085992456?s=61&t=z6gv2VZ59wUiwkf41xNwcQ). 
