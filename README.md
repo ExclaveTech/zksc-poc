@@ -4,7 +4,7 @@ The ZK State Channel is a novel scaling solution based on state channels, Validi
 
 Fully On-chain Gaming (FOCG), which is believed to be the next-generation dApp, stores all game logic and data entirely on the blockchain, requiring high system performance. This makes Validium an ideal execution environment for FOCG. However, for interoperability reasons, FOCG must retain user data and game contracts on the blockchain. Running FOCG directly in Validium may reduce its interoperability and potentially impact the player's user experience, dividing traffic and liquidity. To address this issue, a zk state channel is constructed between FOCG and Validium using recursive zk-SNARKs. This allows complex and independent game logic within FOCG to run on Validium, verifying the correctness of player's game processes and results through recursive zkSNARKs, and transmitting zk proofs and game results back to the blockchain after the game's conclusion.
 ## How does it work？
-<img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_1.png" alt="High-level Structure" width="550" height="auto">
+<img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_1.jpg" alt="High-level Structure" width="550" height="auto">
 ZK State Channels combine technologies such as recursive zero-knowledge proofs (recursive zk-SNARKs), state channels, and Validium to achieve an efficient, private, and scalable blockchain interaction method. The following are the core functional modules of the ZK State Channel:
 
 ### 1. On-Chain Contract Module
