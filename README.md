@@ -6,6 +6,7 @@ Fully On-chain Gaming (FOCG), which is believed to be the next-generation dApp, 
 ## How does it work？
 <img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_1.png" alt="High-level Structure" width="550" height="auto">
 ZK State Channels combine technologies such as recursive zero-knowledge proofs (recursive zk-SNARKs), state channels, and Validium to achieve an efficient, private, and scalable blockchain interaction method. The following are the core functional modules of the ZK State Channel:
+
 ### 1. On-Chain Contract Module
 State Channels are a scalability technology with the core concept of executing transactions offline, only submitting the state (account balances, contract states, etc.) to the blockchain when necessary. In ZK State Channels, the on-chain contract module serves as the entry point for users to interact on-chain and manage on-chain states. It is used to lock the state when opening a state channel and settle it after the channel is closed.
 #### Efficient & Streamlined dApp Framework
