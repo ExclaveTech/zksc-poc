@@ -4,6 +4,7 @@ The ZK State Channel is a novel scaling solution based on state channels, Validi
 
 Fully On-chain Gaming (FOCG), which is believed to be the next-generation dApp, stores all game logic and data entirely on the blockchain, requiring high system performance. This makes Validium an ideal execution environment for FOCG. However, for interoperability reasons, FOCG must retain user data and game contracts on the blockchain. Running FOCG directly in Validium may reduce its interoperability and potentially impact the player's user experience, dividing traffic and liquidity. To address this issue, a zk state channel is constructed between FOCG and Validium using recursive zk-SNARKs. This allows complex and independent game logic within FOCG to run on Validium, verifying the correctness of player's game processes and results through recursive zkSNARKs, and transmitting zk proofs and game results back to the blockchain after the game's conclusion.
 ## How does it work？
+<img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_1.png" alt="High-level Structure" width="550" height="auto">
 ZK State Channels combine technologies such as recursive zero-knowledge proofs (recursive zk-SNARKs), state channels, and Validium to achieve an efficient, private, and scalable blockchain interaction method. The following are the core functional modules of the ZK State Channel:
 ### 1. On-Chain Contract Module
 State Channels are a scalability technology with the core concept of executing transactions offline, only submitting the state (account balances, contract states, etc.) to the blockchain when necessary. In ZK State Channels, the on-chain contract module serves as the entry point for users to interact on-chain and manage on-chain states. It is used to lock the state when opening a state channel and settle it after the channel is closed.
@@ -63,9 +64,6 @@ function getState(uint _key) external view returns (bytes memory);
 ```
 ### 2. Recursive zk-SNARKs Generation Module
 As an off-chain scaling solution, the ZK State Channels allow us to move complex logic and computations from fully on-chain games to off-chain. It leverages zk-proofs to verify the correctness and integrity of user operations conducted off-chain, ultimately requiring only the submission of the user's game results and state to the blockchain. Since State Channels only submit data to the chain once when the channel is closed, to ensure the integrity and validity of user data, ZK State Channels introduce a new zk-proof generation scheme: recursive zero-knowledge proofs.
-
-<img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_1.png" alt="High-level Structure" width="550" height="auto">
-
 #### Recursion + zk-SNARKs
 Recursive Zero-Knowledge Proofs are a variant of zero-knowledge proofs that allow one proof to verify the correctness of another proof. In recursive zero-knowledge proofs, a proof can include a reference to another proof, enabling multiple proofs to be nested together, forming a proof chain for verification within the proof hierarchy.
 Users of ZK State Channels perform off-chain operations through contract execution in a virtual environment. These operations batch together transaction data and generate zero-knowledge proofs. Leveraging the concise proofs of zkSNARKs, the generated zk-proofs are recursively generated to minimize on-chain data and verification costs.
