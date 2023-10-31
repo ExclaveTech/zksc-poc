@@ -80,6 +80,7 @@ The goal of zk State Channel is to reduce storage costs by processing certain tr
 ### 4. Transaction Data Coordinator Module
 Off-chain networks rely on a fixed ticking mechanism to ensure that participants can maintain consistent observations of global data, enabling real-time and effective interactions within the game. This often implies the need for containers like blocks to receive and process transactions from the global network. The construction of ZK State Channels is based on building recursive zk-proofs on a per-game basis. This requires the introduction of new roles to reprocess and distribute transactions from different games to the generators of zk-proofs, ensuring effective segmentation and coordination of network data in both temporal and spatial dimensions.
 <img src="https://github.com/zk-state-channel/zksc-poc/blob/main/zksc_pic_2.jpg" alt="High-level Structure 2" width="850" height="auto">
+
 Taking an example from an MUD-based game project, within the established World and System, the essence of a player creating a new session is to build a new state data storage, which means updating the Tables within the Store module. Therefore, the responsibility of the Transaction Data Coordinator is to construct independent identifiers (IDs) based on these Tables and to monitor and distribute them.
 ### Thanks to...
 [Mohamed Fouda's inspiration](https://twitter.com/mohamedffouda/status/1712193022085992456?s=61&t=z6gv2VZ59wUiwkf41xNwcQ). 
